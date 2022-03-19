@@ -1,0 +1,45 @@
+2022-03-20 01:09:11,839 - INFO - MainWdo - Program started.
+2022-03-20 01:09:11,840 - INFO - YouDaoImplement - Initialize the module of YouDaoImplement.
+2022-03-20 01:09:11,840 - INFO - YouDaoImplement - The accent is set to US.
+2022-03-20 01:09:11,840 - INFO - YouDaoImplement - The word has been set to 'abandon'
+2022-03-20 01:09:11,840 - INFO - TranslateImplement - Initialize the module of TranslateImplement.
+2022-03-20 01:09:11,840 - INFO - TranslateImplement - The word has been set to 'abandon'
+2022-03-20 01:09:11,840 - INFO - PreProcessImplement - Initialized a module of PreProcessImplement.
+2022-03-20 01:09:11,860 - INFO - PreProcessImplement - Successfully get the content of ../docx/word.docx
+2022-03-20 01:09:11,966 - INFO - PreProcessImplement - 169 words has been checked out.
+2022-03-20 01:09:11,979 - INFO - MainWdo - Successfully acquire a set of words.
+2022-03-20 01:09:11,980 - INFO - MainWdo - Initialise the connection.
+2022-03-20 01:09:13,260 - INFO - MainWdo - The word 'evaluate' has been selected.
+2022-03-20 01:09:13,260 - INFO - YouDaoImplement - The word has been set to 'evaluate'
+2022-03-20 01:09:13,261 - INFO - MainWdo - The word 'evaluate' has been played.
+2022-03-20 01:09:13,261 - INFO - YouDaoImplement - Successfully get the url http://dict.youdao.com/dictvoice?type=0&audio=evaluate
+2022-03-20 01:09:13,290 - INFO - YouDaoImplement - The audio of 'evaluate' is saved to ./temp
+2022-03-20 01:09:26,119 - INFO - MainWdo - The word 'estate' has been selected.
+2022-03-20 01:09:26,120 - INFO - YouDaoImplement - The word has been set to 'estate'
+2022-03-20 01:09:26,120 - INFO - MainWdo - The word 'estate' has been played.
+2022-03-20 01:09:26,120 - INFO - YouDaoImplement - Successfully get the url http://dict.youdao.com/dictvoice?type=0&audio=estate
+2022-03-20 01:09:26,136 - INFO - YouDaoImplement - The audio of 'estate' is saved to ./temp
+2022-03-20 01:09:28,431 - INFO - YouDaoImplement - The word has been set to 'estate'
+2022-03-20 01:09:28,432 - INFO - MainWdo - The word 'estate' has been played.
+2022-03-20 01:09:28,432 - INFO - YouDaoImplement - Successfully get the url http://dict.youdao.com/dictvoice?type=0&audio=estate
+2022-03-20 01:09:28,454 - INFO - YouDaoImplement - The audio of 'estate' is saved to ./temp
+2022-03-20 01:09:32,374 - INFO - TranslateImplement - The word has been set to 'estate'
+2022-03-20 01:09:32,374 - INFO - TranslateImplement - Get the url https://dict.youdao.com/w/eng/estate/#keyfrom=dict2.index
+2022-03-20 01:09:32,505 - INFO - TranslateImplement - The url has been parsed as Beautiful Soup.
+2022-03-20 01:09:32,505 - INFO - TranslateImplement - The meaning of 'estate' is obtained.
+2022-03-20 01:09:32,512 - INFO - MainWdo - The translation of 'estate' has been showed in the QTextBrowser
+2022-03-20 01:09:36,286 - INFO - MainWdo - The word 'imprecation' has been selected.
+2022-03-20 01:09:36,287 - INFO - YouDaoImplement - The word has been set to 'imprecation'
+2022-03-20 01:09:36,287 - INFO - MainWdo - The word 'imprecation' has been played.
+2022-03-20 01:09:36,287 - INFO - YouDaoImplement - Successfully get the url http://dict.youdao.com/dictvoice?type=0&audio=imprecation
+2022-03-20 01:09:36,307 - INFO - YouDaoImplement - The audio of 'imprecation' is saved to ./temp
+2022-03-20 01:09:40,592 - INFO - YouDaoImplement - The word has been set to 'imprecation'
+2022-03-20 01:09:40,593 - INFO - MainWdo - The word 'imprecation' has been played.
+2022-03-20 01:09:40,593 - INFO - YouDaoImplement - Successfully get the url http://dict.youdao.com/dictvoice?type=0&audio=imprecation
+2022-03-20 01:09:40,618 - INFO - YouDaoImplement - The audio of 'imprecation' is saved to ./temp
+2022-03-20 01:09:45,880 - INFO - TranslateImplement - The word has been set to 'imprecation'
+2022-03-20 01:09:45,880 - INFO - TranslateImplement - Get the url https://dict.youdao.com/w/eng/imprecation/#keyfrom=dict2.index
+2022-03-20 01:09:46,016 - INFO - TranslateImplement - The url has been parsed as Beautiful Soup.
+2022-03-20 01:09:46,016 - INFO - TranslateImplement - The meaning of 'imprecation' is obtained.
+2022-03-20 01:09:46,018 - INFO - MainWdo - The translation of 'imprecation' has been showed in the QTextBrowser
+2022-03-20 01:09:47,951 - INFO - MainWdo - The program exited and all temp files deleted.
