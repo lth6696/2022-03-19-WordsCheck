@@ -25,8 +25,8 @@ class MainWdo(QMainWindow, mainwindow.Ui_MainWindow):
 
         self.setWindowTitle('单词检查程序')
 
-        # self.pron = pronounce.impl.YouDaoImplement()
-        self.pron = pronounce.impl.GoogleImplement()
+        self.pron = pronounce.impl.YouDaoImplement()
+        # self.pron = pronounce.impl.GoogleImplement()
         self.tran = translate.impl.TranslateImplement()
         self.words = self._get_words()
         self.word = ''
@@ -99,3 +99,7 @@ def main():
 if __name__ == '__main__':
     logging.config.fileConfig('config/config.ini')
     main()
+
+    # todo make a timer
+    # todo count the word not answered
+    # todo deleted the repeated word

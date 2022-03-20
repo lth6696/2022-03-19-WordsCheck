@@ -14,7 +14,7 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QVBoxLayout" name="verticalLayout_2" stretch="5,1,1,1,1">
+   <layout class="QVBoxLayout" name="verticalLayout_2" stretch="5,0,0,1,1">
     <property name="sizeConstraint">
      <enum>QLayout::SetDefaultConstraint</enum>
     </property>
@@ -28,6 +28,22 @@
       </property>
       <property name="styleSheet">
        <string notr="true">font: 87 16pt &quot;Arial Black&quot;;</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="PBNext">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">font: 87 16pt &quot;Arial Black&quot;;</string>
+      </property>
+      <property name="text">
+       <string>Next</string>
       </property>
      </widget>
     </item>
@@ -60,22 +76,6 @@
       </property>
       <property name="text">
        <string>Translate</string>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QPushButton" name="PBNext">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">font: 87 16pt &quot;Arial Black&quot;;</string>
-      </property>
-      <property name="text">
-       <string>Next</string>
       </property>
      </widget>
     </item>
