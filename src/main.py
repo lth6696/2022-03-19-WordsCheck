@@ -25,7 +25,8 @@ class MainWdo(QMainWindow, mainwindow.Ui_MainWindow):
 
         self.setWindowTitle('单词检查程序')
 
-        self.pron = pronounce.impl.YouDaoImplement()
+        # self.pron = pronounce.impl.YouDaoImplement()
+        self.pron = pronounce.impl.GoogleImplement()
         self.tran = translate.impl.TranslateImplement()
         self.words = self._get_words()
         self.word = ''
@@ -63,6 +64,7 @@ class MainWdo(QMainWindow, mainwindow.Ui_MainWindow):
             logging.error('MainWdo - There is no word.')
             return None
         self.pron.set_word(self.word)
+        self.pron.set_accent(False)
         t = threading.Thread(target=self.pron.play)
         t.start()
         logging.info('MainWdo - The word \'{}\' has been played.'.format(self.word))

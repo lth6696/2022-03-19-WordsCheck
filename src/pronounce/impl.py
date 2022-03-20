@@ -2,13 +2,14 @@ import logging
 import os
 import urllib.request
 from playsound import playsound
+from gtts import gTTS
 
-from .api import YouDao
+from .api import Pronounce
 
 
-class YouDaoImplement(YouDao):
+class YouDaoImplement(Pronounce):
     def __init__(self):
-        YouDao.__init__(self)
+        Pronounce.__init__(self)
         logging.info('YouDaoImplement - Initialize the module of YouDaoImplement.')
         self.type = self.set_accent()
         self.word = self.set_word()
@@ -25,12 +26,14 @@ class YouDaoImplement(YouDao):
         return self.type
 
     def play(self):
-        if not os.path.exists('./temp'):
-            logging.info('YouDaoImplement - Create a new directory in path {}.'.format('./temp'))
-        temp = './temp/'+str(self.word)+'.mp3'
+        path = './temp'
+        if not os.path.exists(path):
+            logging.info('YouDaoImplement - Create a new directory in path {}.'.format(path))
+            os.mkdir(path)
+        temp = path + '/' + str(self.word)+'.mp3'
         url = self._get_url()
         urllib.request.urlretrieve(url, temp)
-        logging.info('YouDaoImplement - The audio of \'{}\' is saved to {}'.format(self.word, './temp'))
+        logging.info('YouDaoImplement - The audio of \'{}\' is saved to {}'.format(self.word, path))
         playsound(temp)
         return None
 
@@ -47,3 +50,46 @@ class YouDaoImplement(YouDao):
         url = r'http://dict.youdao.com/dictvoice?type='+str(accent)+r'&audio='+self.word
         logging.info('YouDaoImplement - Successfully get the url {}'.format(url))
         return url
+
+
+class GoogleImplement(Pronounce):
+    def __init__(self):
+        Pronounce.__init__(self)
+        logging.info('GoogleImplement - Initialize the module of GoogleImplement.')
+        self.type = self.set_accent()
+        self.word = self.set_word()
+
+    def set_accent(self, type: bool = True):
+        if type:
+            # default is US
+            accent = {'lang': 'en', 'tld': 'com'}
+        else:
+            # type is UK
+            accent = {'lang': 'en', 'tld': 'co.uk'}
+        return accent
+
+    def get_accent(self):
+        return self.type
+
+    def set_word(self, word='abandon'):
+        if not word:
+            logging.error('No word.')
+            raise Exception('No word.')
+        self.word = word
+        logging.info('GoogleImplement - The word has been set to \'{}\''.format(self.word))
+        return str(word)
+
+    def get_word(self):
+        return self.word
+
+    def play(self):
+        path = './temp'
+        if not os.path.exists(path):
+            logging.info('GoogleImplement - Create a new directory in path {}.'.format(path))
+            os.mkdir(path)
+        temp = path + '/' + str(self.word) + '.mp3'
+        if not os.path.exists(temp):
+            tts = gTTS(text=self.word, **self.type)
+            tts.save(temp)
+        playsound(temp)
+        return str

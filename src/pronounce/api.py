@@ -1,6 +1,6 @@
 
 
-class YouDao:
+class Pronounce:
     def __init__(self):
         pass
 
