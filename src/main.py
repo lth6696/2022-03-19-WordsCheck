@@ -4,6 +4,8 @@ import random
 import threading
 import logging
 import logging.config
+import time
+
 from PyQt5.QtWidgets import *
 
 import preprocess
@@ -13,7 +15,7 @@ from ui import mainwindow
 
 
 TEMP_FILE = './temp'
-DOCX_FILE = '../docx/word.docx'
+DOCX_FILE = '../docx/14-18.docx'
 
 
 class MainWdo(QMainWindow, mainwindow.Ui_MainWindow):
@@ -30,20 +32,22 @@ class MainWdo(QMainWindow, mainwindow.Ui_MainWindow):
         self.tran = translate.impl.TranslateImplement()
         self.words = self._get_words()
         self.word = ''
+        self.sample = [i for i in range(len(self.words))]
+        self.wrong_answer = []
+        self.correct_answer = -1
 
         self._set_sender()
 
     def _get_words(self):
         ppi = preprocess.impl.PreProcessImplement()
-        content = ppi.read_docx(DOCX_FILE)
-        words = ppi.find_words(content)
-        # ppi.save(words, 'w.csv')
+        words = ppi.run(DOCX_FILE)
         logging.info('MainWdo - Successfully acquire a set of words.')
         return words
 
     def _set_sender(self):
-        self.PBNext.clicked.connect(self._next)
-        self.PBPlayer.clicked.connect(self._player)
+        self.PBCorrect.clicked.connect(self._correct)
+        self.PBWrong.clicked.connect(self._wrong)
+        self.PBReplay.clicked.connect(self._player)
         self.PBTranslate.clicked.connect(self._translate)
         self.PBExit.clicked.connect(self._exit)
         logging.info('MainWdo - Initialise the connection.')
@@ -52,12 +56,33 @@ class MainWdo(QMainWindow, mainwindow.Ui_MainWindow):
         if not self.words:
             logging.error('MainWdo - The set of words does not exist.')
             raise Exception('The set of words does not exist.')
-        index = random.randint(0, len(self.words)-1)
-        self.word = self.words[index]
+        index = random.sample(self.sample, 1)
+        self.sample.remove(index[0])
+        self.word = self.words[index[0]]
         self.TBShow.clear()
         self.TBShow.setText("Please recite the meaning of the words according to the audio.")
         logging.info('MainWdo - The word \'{}\' has been selected.'.format(self.word))
-        self._player()
+        self._set_timer()
+
+    def _correct(self):
+        if self.word == '' and self.correct_answer > -1:
+            logging.error('MainWdo - The word can not be answered correctly.')
+            return False
+        self.correct_answer += 1
+        logging.info('MainWdo - The number of correct answer is {}.'.format(self.correct_answer))
+        self._cal_grade()
+        self._next()
+
+    def _wrong(self):
+        if self.word == '':
+            logging.info('MainWdo - There is no word.')
+            return False
+        self.wrong_answer.append(self.word)
+        logging.info('MainWdo - The number of wrong answer is {}.'.format(len(self.wrong_answer)))
+        index = self.words.index(self.word)
+        self.sample.append(index)
+        self._cal_grade()
+        self._next()
 
     def _player(self):
         if self.word == '':
@@ -88,6 +113,25 @@ class MainWdo(QMainWindow, mainwindow.Ui_MainWindow):
             os.remove(file)
         logging.info('MainWdo - The program exited and all temp files deleted.')
 
+    def _set_timer(self):
+        def run():
+            self._player()
+            time.sleep(3)
+            self._player()
+            time.sleep(4)
+        t = threading.Thread(target=run)
+        t.start()
+
+    def _cal_grade(self):
+        checked_words = len(self.wrong_answer) + int(self.correct_answer)
+        if not checked_words:
+            logging.error('MainWdo - Already checked answer is {}.'.format(checked_words))
+            return False
+        grade = self.correct_answer / checked_words * 100
+        self.TBGrade.clear()
+        self.TBGrade.append('Your score is {:.2f} in {} words.'.format(grade, checked_words))
+        logging.info('MainWdo - Score updated to {:2f}.'.format(grade))
+
 
 def main():
     app = QApplication(sys.argv)
@@ -100,6 +144,4 @@ if __name__ == '__main__':
     logging.config.fileConfig('config/config.ini')
     main()
 
-    # todo make a timer
-    # todo count the word not answered
-    # todo deleted the repeated word
+    # todo 加入之前错误的单词和部分正确的单词

@@ -13,9 +13,7 @@ class PreProcessImplement(PreProcess):
         PreProcess.__init__(self)
         logging.info('PreProcessImplement - Initialized a module of PreProcessImplement.')
 
-    def read_docx(self, path=''):
-        if path == '':
-            path = '../docx/word.docx'
+    def read_docx(self, path):
         if not os.path.exists(path):
             logging.error("PreProcessImplement - Can not find docx file in {}".format(path))
             raise Exception("Can not find docx file in {}".format(path))
@@ -53,3 +51,16 @@ class PreProcessImplement(PreProcess):
                 words += row
             logging.info('PreProcessImplement - Words have been read in memory.')
         return words
+
+    def run(self, path):
+        csv_path = str(path).replace('.docx', '.csv')
+        if os.path.exists(csv_path):
+            logging.info('PreProcessImplement - Find the last-save file {}.'.format(csv_path))
+            words = self.read(csv_path)
+            return words
+        else:
+            content = self.read_docx(path)
+            words = self.find_words(content)
+            self.save(words, csv_path)
+            return words
+

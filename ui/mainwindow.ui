@@ -6,19 +6,52 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>805</width>
-    <height>543</height>
+    <width>873</width>
+    <height>621</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QVBoxLayout" name="verticalLayout_2" stretch="5,0,0,1,1">
+   <layout class="QGridLayout" name="gridLayout" rowstretch="6,2,2,2,2,1">
     <property name="sizeConstraint">
      <enum>QLayout::SetDefaultConstraint</enum>
     </property>
-    <item>
+    <item row="5" column="0" colspan="2">
+     <widget class="QPushButton" name="PBExit">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">font: 87 16pt &quot;Arial Black&quot;;</string>
+      </property>
+      <property name="text">
+       <string>Exit</string>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="1">
+     <widget class="QPushButton" name="PBCorrect">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">font: 87 16pt &quot;Arial Black&quot;;
+background-color: rgb(118, 255, 111);</string>
+      </property>
+      <property name="text">
+       <string>Correct</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="0" colspan="2">
      <widget class="QTextBrowser" name="TBShow">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
@@ -31,39 +64,7 @@
       </property>
      </widget>
     </item>
-    <item>
-     <widget class="QPushButton" name="PBNext">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">font: 87 16pt &quot;Arial Black&quot;;</string>
-      </property>
-      <property name="text">
-       <string>Next</string>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QPushButton" name="PBPlayer">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">font: 87 16pt &quot;Arial Black&quot;;</string>
-      </property>
-      <property name="text">
-       <string>Play</string>
-      </property>
-     </widget>
-    </item>
-    <item>
+    <item row="4" column="0" colspan="2">
      <widget class="QPushButton" name="PBTranslate">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
@@ -79,8 +80,8 @@
       </property>
      </widget>
     </item>
-    <item>
-     <widget class="QPushButton" name="PBExit">
+    <item row="3" column="0" colspan="2">
+     <widget class="QPushButton" name="PBReplay">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
         <horstretch>0</horstretch>
@@ -91,7 +92,37 @@
        <string notr="true">font: 87 16pt &quot;Arial Black&quot;;</string>
       </property>
       <property name="text">
-       <string>Exit</string>
+       <string>Replay</string>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="0">
+     <widget class="QPushButton" name="PBWrong">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">font: 87 16pt &quot;Arial Black&quot;;
+background-color: rgb(255, 131, 131);</string>
+      </property>
+      <property name="text">
+       <string>Wrong</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="0" colspan="2">
+     <widget class="QTextBrowser" name="TBGrade">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">font: 87 16pt &quot;Arial Black&quot;;</string>
       </property>
      </widget>
     </item>
