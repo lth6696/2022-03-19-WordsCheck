@@ -111,22 +111,6 @@ background-color: rgb(255, 131, 131);</string>
       </property>
      </widget>
     </item>
-    <item row="5" column="0" colspan="4">
-     <widget class="QPushButton" name="PBTranslate">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">font: 87 16pt &quot;Arial Black&quot;;</string>
-      </property>
-      <property name="text">
-       <string>Translate</string>
-      </property>
-     </widget>
-    </item>
     <item row="6" column="0" colspan="4">
      <widget class="QPushButton" name="PBExit">
       <property name="sizePolicy">
@@ -166,6 +150,38 @@ background-color: rgb(255, 131, 131);</string>
       </property>
       <property name="styleSheet">
        <string notr="true">font: 87 16pt &quot;Arial Black&quot;;</string>
+      </property>
+     </widget>
+    </item>
+    <item row="5" column="2" colspan="2">
+     <widget class="QPushButton" name="PBTranslate">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">font: 87 16pt &quot;Arial Black&quot;;</string>
+      </property>
+      <property name="text">
+       <string>Meaning</string>
+      </property>
+     </widget>
+    </item>
+    <item row="5" column="0" colspan="2">
+     <widget class="QPushButton" name="PBSpell">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">font: 87 16pt &quot;Arial Black&quot;;</string>
+      </property>
+      <property name="text">
+       <string>Spell</string>
       </property>
      </widget>
     </item>

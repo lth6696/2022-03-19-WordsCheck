@@ -51,6 +51,7 @@ class MainWdo(QMainWindow, mainwindow.Ui_MainWindow):
         self.PBCorrect.clicked.connect(self._correct)
         self.PBWrong.clicked.connect(self._wrong)
         self.PBReplay.clicked.connect(self._player)
+        self.PBSpell.clicked.connect(self._show_spell_only)
         self.PBTranslate.clicked.connect(self._translate)
         self.PBExit.clicked.connect(self._exit)
 
@@ -93,7 +94,7 @@ class MainWdo(QMainWindow, mainwindow.Ui_MainWindow):
         self.correct_answer += 1
         logging.info('MainWdo - The number of correct answer is {}.'.format(self.correct_answer))
         self._cal_grade()
-        # self._kill_threads()
+        self._kill_threads()
         self._next()
 
     def _wrong(self):
@@ -129,6 +130,14 @@ class MainWdo(QMainWindow, mainwindow.Ui_MainWindow):
             self.TBShow.append(m)
         logging.info('MainWdo - The translation of \'{}\' has been showed in the QTextBrowser'.format(self.word))
 
+    def _show_spell_only(self):
+        if self.word == '':
+            logging.error('MainWdo - There is no word.')
+            return None
+        self.TBShow.clear()
+        self.TBShow.append(self.word)
+        logging.info('MainWdo - The spell of \'{}\' has been showed in the QTextBrowser'.format(self.word))
+
     def _exit(self):
         # for i in os.listdir(TEMP_FILE):
         #     file = TEMP_FILE + '/' + i
@@ -155,7 +164,7 @@ class MainWdo(QMainWindow, mainwindow.Ui_MainWindow):
             return False
         grade = self.correct_answer / checked_words * 100
         self.TBGrade.clear()
-        self.TBGrade.append('Your score is {:.2f} in {} words.'.format(grade, checked_words))
+        self.TBGrade.append('Your score is {:.2f} in {}/{} words.'.format(grade, checked_words, len(self.words)))
         logging.info('MainWdo - Score updated to {:2f}.'.format(grade))
 
     def _save_wrong_words(self):
@@ -212,5 +221,4 @@ if __name__ == '__main__':
     main()
     # download_all_words_audio()
     # todo 删除词根
-    # todo 展示单词，再展示涵义
     # todo 加入计时天数
