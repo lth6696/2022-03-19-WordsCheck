@@ -30,10 +30,11 @@ class YouDaoImplement(Pronounce):
         if not os.path.exists(path):
             logging.info('YouDaoImplement - Create a new directory in path {}.'.format(path))
             os.mkdir(path)
-        temp = path + '/' + str(self.word)+'.mp3'
-        url = self._get_url()
-        urllib.request.urlretrieve(url, temp)
-        logging.info('YouDaoImplement - The audio of \'{}\' is saved to {}'.format(self.word, path))
+        temp = path + '/' + str(self.word) + '.mp3'
+        if not os.path.exists(temp):
+            url = self._get_url()
+            urllib.request.urlretrieve(url, temp)
+            logging.info('YouDaoImplement - The audio of \'{}\' is saved to {}'.format(self.word, path))
         playsound(temp)
         return None
 
@@ -91,5 +92,6 @@ class GoogleImplement(Pronounce):
         if not os.path.exists(temp):
             tts = gTTS(text=self.word, **self.type)
             tts.save(temp)
+            logging.info('GoogleImplement - The audio of \'{}\' has been saved.'.format(self.word))
         playsound(temp)
-        return str
+        return None

@@ -14,27 +14,54 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QGridLayout" name="gridLayout" rowstretch="6,2,2,2,2,1">
+   <layout class="QGridLayout" name="gridLayout" rowstretch="8,2,1,2,1,1,1">
     <property name="sizeConstraint">
      <enum>QLayout::SetDefaultConstraint</enum>
     </property>
-    <item row="5" column="0" colspan="2">
-     <widget class="QPushButton" name="PBExit">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
+    <item row="2" column="0">
+     <widget class="QRadioButton" name="RBGoogle">
       <property name="styleSheet">
-       <string notr="true">font: 87 16pt &quot;Arial Black&quot;;</string>
+       <string notr="true">font: 87 10pt &quot;Arial Black&quot;;</string>
       </property>
       <property name="text">
-       <string>Exit</string>
+       <string>Google</string>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="2">
+     <widget class="QRadioButton" name="RBDeepL">
+      <property name="styleSheet">
+       <string notr="true">font: 87 10pt &quot;Arial Black&quot;;</string>
+      </property>
+      <property name="text">
+       <string>DeepL</string>
       </property>
      </widget>
     </item>
     <item row="2" column="1">
+     <widget class="QRadioButton" name="RBBaidu">
+      <property name="styleSheet">
+       <string notr="true">font: 87 10pt &quot;Arial Black&quot;;</string>
+      </property>
+      <property name="text">
+       <string>Baidu</string>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="3">
+     <widget class="QRadioButton" name="RBYouDao">
+      <property name="styleSheet">
+       <string notr="true">font: 87 10pt &quot;Arial Black&quot;;</string>
+      </property>
+      <property name="text">
+       <string>YouDao</string>
+      </property>
+      <property name="checked">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="2" colspan="2">
      <widget class="QPushButton" name="PBCorrect">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
@@ -51,52 +78,7 @@ background-color: rgb(118, 255, 111);</string>
       </property>
      </widget>
     </item>
-    <item row="0" column="0" colspan="2">
-     <widget class="QTextBrowser" name="TBShow">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">font: 87 16pt &quot;Arial Black&quot;;</string>
-      </property>
-     </widget>
-    </item>
-    <item row="4" column="0" colspan="2">
-     <widget class="QPushButton" name="PBTranslate">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">font: 87 16pt &quot;Arial Black&quot;;</string>
-      </property>
-      <property name="text">
-       <string>Translate</string>
-      </property>
-     </widget>
-    </item>
     <item row="3" column="0" colspan="2">
-     <widget class="QPushButton" name="PBReplay">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">font: 87 16pt &quot;Arial Black&quot;;</string>
-      </property>
-      <property name="text">
-       <string>Replay</string>
-      </property>
-     </widget>
-    </item>
-    <item row="2" column="0">
      <widget class="QPushButton" name="PBWrong">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
@@ -113,8 +95,69 @@ background-color: rgb(255, 131, 131);</string>
       </property>
      </widget>
     </item>
-    <item row="1" column="0" colspan="2">
+    <item row="4" column="0" colspan="4">
+     <widget class="QPushButton" name="PBReplay">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">font: 87 16pt &quot;Arial Black&quot;;</string>
+      </property>
+      <property name="text">
+       <string>Replay</string>
+      </property>
+     </widget>
+    </item>
+    <item row="5" column="0" colspan="4">
+     <widget class="QPushButton" name="PBTranslate">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">font: 87 16pt &quot;Arial Black&quot;;</string>
+      </property>
+      <property name="text">
+       <string>Translate</string>
+      </property>
+     </widget>
+    </item>
+    <item row="6" column="0" colspan="4">
+     <widget class="QPushButton" name="PBExit">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">font: 87 16pt &quot;Arial Black&quot;;</string>
+      </property>
+      <property name="text">
+       <string>Exit</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="0" colspan="4">
      <widget class="QTextBrowser" name="TBGrade">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">font: 87 16pt &quot;Arial Black&quot;;</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="0" colspan="4">
+     <widget class="QTextBrowser" name="TBShow">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
         <horstretch>0</horstretch>
