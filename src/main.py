@@ -93,7 +93,7 @@ class MainWdo(QMainWindow, mainwindow.Ui_MainWindow):
         self.correct_answer += 1
         logging.info('MainWdo - The number of correct answer is {}.'.format(self.correct_answer))
         self._cal_grade()
-        self._kill_threads()
+        # self._kill_threads()
         self._next()
 
     def _wrong(self):
@@ -105,7 +105,7 @@ class MainWdo(QMainWindow, mainwindow.Ui_MainWindow):
         index = self.words.index(self.word)
         self.sample.append(index)
         self._cal_grade()
-        self._kill_threads()
+        # self._kill_threads()
         self._next()
 
     def _player(self):
@@ -134,7 +134,7 @@ class MainWdo(QMainWindow, mainwindow.Ui_MainWindow):
         #     file = TEMP_FILE + '/' + i
         #     os.remove(file)
         self._save_wrong_words()
-        self._kill_threads()
+        # self._kill_threads()
         self.close()
         logging.info('MainWdo - The program exited and all temp files deleted.')
 
@@ -211,3 +211,6 @@ if __name__ == '__main__':
     logging.config.fileConfig('config/config.ini')
     main()
     # download_all_words_audio()
+    # todo 删除词根
+    # todo 展示单词，再展示涵义
+    # todo 加入计时天数
