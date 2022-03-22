@@ -17,7 +17,7 @@ from ui import mainwindow
 
 
 TEMP_FILE = './temp'
-DOCX_FILE = '../docx/14-18.docx'
+DOCX_FILE = '../docx/19-23.docx'
 WRONG_FILE = '../docx/wrong.csv'
 
 
@@ -42,11 +42,6 @@ class MainWdo(QMainWindow, mainwindow.Ui_MainWindow):
 
         self._set_sender()
 
-    def _get_words(self):
-        words = self.ppi.run(DOCX_FILE, WRONG_FILE)
-        logging.info('MainWdo - Successfully acquire a set of words.')
-        return words
-
     def _set_sender(self):
         self.PBCorrect.clicked.connect(self._correct)
         self.PBWrong.clicked.connect(self._wrong)
@@ -61,31 +56,10 @@ class MainWdo(QMainWindow, mainwindow.Ui_MainWindow):
         self.RBYouDao.toggled.connect(self._set_audio_source)
         logging.info('MainWdo - Initialise the connection.')
 
-    def _set_audio_source(self):
-        if self.RBGoogle.isChecked():
-            self.pron = pronounce.impl.GoogleImplement()
-        elif self.RBBaidu.isChecked():
-            pass
-        elif self.RBDeepL.isChecked():
-            pass
-        elif self.RBYouDao.isChecked():
-            self.pron = pronounce.impl.YouDaoImplement()
-        else:
-            self.pron = None
-            logging.error('MainWdo - No QRadioButton is checked.')
-        return self.pron
-
-    def _next(self):
-        if not self.words:
-            logging.error('MainWdo - The set of words does not exist.')
-            raise Exception('The set of words does not exist.')
-        index = random.sample(self.sample, 1)
-        self.sample.remove(index[0])
-        self.word = self.words[index[0]]
-        self.TBShow.clear()
-        self.TBShow.setText("Please recite the meaning of the words according to the audio.")
-        logging.info('MainWdo - The word \'{}\' has been selected.'.format(self.word))
-        self._set_timer()
+    def _get_words(self):
+        words = self.ppi.run(DOCX_FILE, WRONG_FILE)
+        logging.info('MainWdo - Successfully acquire a set of words.')
+        return words
 
     def _correct(self):
         if self.word == '' and self.correct_answer > -1:
@@ -114,9 +88,17 @@ class MainWdo(QMainWindow, mainwindow.Ui_MainWindow):
             logging.error('MainWdo - There is no word.')
             return None
         self.pron.set_word(self.word)
-        self.pron.set_accent(True)
+        self.pron.set_accent(False)
         self.pron.play()
         logging.info('MainWdo - The word \'{}\' has been played.'.format(self.word))
+
+    def _show_spell_only(self):
+        if self.word == '':
+            logging.error('MainWdo - There is no word.')
+            return None
+        self.TBShow.clear()
+        self.TBShow.append(self.word)
+        logging.info('MainWdo - The spell of \'{}\' has been showed in the QTextBrowser'.format(self.word))
 
     def _translate(self):
         if self.word == '':
@@ -130,13 +112,31 @@ class MainWdo(QMainWindow, mainwindow.Ui_MainWindow):
             self.TBShow.append(m)
         logging.info('MainWdo - The translation of \'{}\' has been showed in the QTextBrowser'.format(self.word))
 
-    def _show_spell_only(self):
-        if self.word == '':
-            logging.error('MainWdo - There is no word.')
-            return None
+    def _set_audio_source(self):
+        if self.RBGoogle.isChecked():
+            self.pron = pronounce.impl.GoogleImplement()
+        elif self.RBBaidu.isChecked():
+            pass
+        elif self.RBDeepL.isChecked():
+            pass
+        elif self.RBYouDao.isChecked():
+            self.pron = pronounce.impl.YouDaoImplement()
+        else:
+            self.pron = None
+            logging.error('MainWdo - No QRadioButton is checked.')
+        return self.pron
+
+    def _next(self):
+        if not self.words:
+            logging.error('MainWdo - The set of words does not exist.')
+            raise Exception('The set of words does not exist.')
+        index = random.sample(self.sample, 1)
+        self.sample.remove(index[0])
+        self.word = self.words[index[0]]
         self.TBShow.clear()
-        self.TBShow.append(self.word)
-        logging.info('MainWdo - The spell of \'{}\' has been showed in the QTextBrowser'.format(self.word))
+        self.TBShow.setText("Please recite the meaning of the words according to the audio.")
+        logging.info('MainWdo - The word \'{}\' has been selected.'.format(self.word))
+        self._set_timer()
 
     def _exit(self):
         # for i in os.listdir(TEMP_FILE):
@@ -189,12 +189,12 @@ class MainWdo(QMainWindow, mainwindow.Ui_MainWindow):
             logging.error('MainWdo - PyThreadState_SetAsyncExc failed.')
             raise SystemError("PyThreadState_SetAsyncExc failed")
 
-    def stop_thread(self, thread):
+    def _stop_thread(self, thread):
         self._async_raise(thread.ident, SystemExit)
 
     def _kill_threads(self):
         for t in self.threading:
-            self.stop_thread(t)
+            self._stop_thread(t)
         self.threading = []
         logging.info('MainWdo - All threads are deleted.')
 
@@ -212,13 +212,13 @@ def download_all_words_audio():
     words = ppi.run(DOCX_FILE, WRONG_FILE)
     for word in words:
         pron.set_word(word)
-        pron.set_accent()
+        pron.set_accent(True)
         pron.play()
 
 
 if __name__ == '__main__':
     logging.config.fileConfig('config/config.ini')
-    main()
-    # download_all_words_audio()
+    # main()
+    download_all_words_audio()
     # todo 删除词根
     # todo 加入计时天数
