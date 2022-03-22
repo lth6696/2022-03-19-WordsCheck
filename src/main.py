@@ -17,7 +17,7 @@ from ui import mainwindow
 
 
 TEMP_FILE = './temp'
-DOCX_FILE = '../docx/19-23.docx'
+DOCX_FILE = '../docx/14-18.docx'
 WRONG_FILE = '../docx/wrong.csv'
 
 
@@ -68,7 +68,7 @@ class MainWdo(QMainWindow, mainwindow.Ui_MainWindow):
         self.correct_answer += 1
         logging.info('MainWdo - The number of correct answer is {}.'.format(self.correct_answer))
         self._cal_grade()
-        self._kill_threads()
+        # self._kill_threads()
         self._next()
 
     def _wrong(self):
@@ -218,7 +218,7 @@ def download_all_words_audio():
 
 if __name__ == '__main__':
     logging.config.fileConfig('config/config.ini')
-    # main()
-    download_all_words_audio()
+    main()
+    # download_all_words_audio()
     # todo 删除词根
     # todo 加入计时天数
