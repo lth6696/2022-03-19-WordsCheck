@@ -17,7 +17,7 @@ from ui import mainwindow
 
 
 TEMP_FILE = './temp'
-DOCX_FILE = '../docx/14-18.docx'
+DOCX_FILE = '../docx/24-28.docx'
 WRONG_FILE = '../docx/wrong.csv'
 
 
@@ -218,7 +218,7 @@ def download_all_words_audio():
 
 if __name__ == '__main__':
     logging.config.fileConfig('config/config.ini')
-    main()
-    # download_all_words_audio()
+    # main()
+    download_all_words_audio()
     # todo 删除词根
     # todo 加入计时天数
