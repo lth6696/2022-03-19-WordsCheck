@@ -93,5 +93,5 @@ class GoogleImplement(Pronounce):
             tts = gTTS(text=self.word, **self.type)
             tts.save(temp)
             logging.info('GoogleImplement - The audio of \'{}\' has been saved.'.format(self.word))
-        # playsound(temp)
+        playsound(temp)
         return None

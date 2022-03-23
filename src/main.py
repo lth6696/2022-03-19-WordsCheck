@@ -150,7 +150,7 @@ class MainWdo(QMainWindow, mainwindow.Ui_MainWindow):
     def _set_timer(self):
         def run():
             self._player()
-            time.sleep(3)
+            time.sleep(2)
             self._player()
             time.sleep(4)
         t = threading.Thread(target=run)
@@ -218,7 +218,7 @@ def download_all_words_audio():
 
 if __name__ == '__main__':
     logging.config.fileConfig('config/config.ini')
-    # main()
-    download_all_words_audio()
+    main()
+    # download_all_words_audio()
     # todo 删除词根
     # todo 加入计时天数
