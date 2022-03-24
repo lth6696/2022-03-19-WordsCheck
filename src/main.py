@@ -15,9 +15,8 @@ import pronounce
 import translate
 from ui import mainwindow
 
-
 TEMP_FILE = './temp'
-DOCX_FILE = '../docx/24-28.docx'
+DOCX_FILE = '../docx/14-18.docx'
 WRONG_FILE = '../docx/wrong.csv'
 
 
@@ -68,7 +67,7 @@ class MainWdo(QMainWindow, mainwindow.Ui_MainWindow):
         self.correct_answer += 1
         logging.info('MainWdo - The number of correct answer is {}.'.format(self.correct_answer))
         self._cal_grade()
-        # self._kill_threads()
+        self._kill_threads()
         self._next()
 
     def _wrong(self):
@@ -80,7 +79,7 @@ class MainWdo(QMainWindow, mainwindow.Ui_MainWindow):
         index = self.words.index(self.word)
         self.sample.append(index)
         self._cal_grade()
-        # self._kill_threads()
+        self._kill_threads()
         self._next()
 
     def _player(self):
@@ -104,13 +103,17 @@ class MainWdo(QMainWindow, mainwindow.Ui_MainWindow):
         if self.word == '':
             logging.error('MainWdo - There is no word.')
             return None
+
         self.tran.set_word(self.word)
-        meanings = self.tran.paraphrase()
-        self.TBShow.clear()
-        self.TBShow.append(self.word)
-        for m in meanings:
-            self.TBShow.append(m)
-        logging.info('MainWdo - The translation of \'{}\' has been showed in the QTextBrowser'.format(self.word))
+        try:
+            meanings = self.tran.paraphrase()
+            self.TBShow.clear()
+            self.TBShow.append(self.word)
+            for m in meanings:
+                self.TBShow.append(m)
+            logging.info('MainWdo - The translation of \'{}\' has been showed in the QTextBrowser'.format(self.word))
+        except:
+            logging.error('MainWdo - The translation of \'{}\' has something wrong.'.format(self.word))
 
     def _set_audio_source(self):
         if self.RBGoogle.isChecked():
@@ -153,6 +156,7 @@ class MainWdo(QMainWindow, mainwindow.Ui_MainWindow):
             time.sleep(2)
             self._player()
             time.sleep(4)
+
         t = threading.Thread(target=run)
         self.threading.append(t)
         t.start()
@@ -177,17 +181,17 @@ class MainWdo(QMainWindow, mainwindow.Ui_MainWindow):
         """Raises an exception in the threads with id tid"""
         if not inspect.isclass(exctype):
             logging.error('MainWdo - Only types can be raised (not instances)')
-            raise TypeError("Only types can be raised (not instances)")
+            # raise TypeError("Only types can be raised (not instances)")
         res = ctypes.pythonapi.PyThreadState_SetAsyncExc(ctypes.c_long(tid), ctypes.py_object(exctype))
         if res == 0:
             logging.error('MainWdo - Invalid thread id.')
-            raise ValueError("invalid thread id")
+            # raise ValueError("invalid thread id")
         elif res != 1:
             # """if it returns a number greater than one, you're in trouble,
             # and you should call it again with exc=NULL to revert the effect"""
             ctypes.pythonapi.PyThreadState_SetAsyncExc(tid, None)
             logging.error('MainWdo - PyThreadState_SetAsyncExc failed.')
-            raise SystemError("PyThreadState_SetAsyncExc failed")
+            # raise SystemError("PyThreadState_SetAsyncExc failed")
 
     def _stop_thread(self, thread):
         self._async_raise(thread.ident, SystemExit)
