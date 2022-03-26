@@ -26,7 +26,7 @@ class PreProcessImplement(PreProcess):
         if os.path.exists(wrong_file):
             words += self.read_wrong_file(wrong_file)
         logging.info("PreProcessImplement - Totally load {} words this time.".format(len(words)))
-        return words
+        return list(set(words))
 
     def read(self, path: str):
         words = []
