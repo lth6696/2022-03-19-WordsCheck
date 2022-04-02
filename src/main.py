@@ -16,7 +16,7 @@ import translate
 from ui import mainwindow
 
 TEMP_FILE = './temp'
-DOCX_FILE = '../docx/44-48.csv'
+DOCX_FILE = '../docx/49-53.csv'
 WRONG_FILE = '../docx/wrong.csv'
 
 
