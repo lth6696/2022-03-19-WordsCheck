@@ -10,13 +10,13 @@ import ctypes
 
 from PyQt5.QtWidgets import *
 
-import preprocess
+import dictionary
 import pronounce
 import translate
 from ui import mainwindow
 
 TEMP_FILE = './temp'
-DOCX_FILE = '../docx/52-56.csv'
+DOCX_FILE = '../docx/58-62.csv'
 WRONG_FILE = '../docx/wrong.csv'
 
 
@@ -31,7 +31,7 @@ class MainWdo(QMainWindow, mainwindow.Ui_MainWindow):
 
         self.pron = self._set_audio_source()
         self.tran = translate.impl.TranslateImplement()
-        self.ppi = preprocess.impl.PreProcessImplement()
+        self.ppi = dictionary.impl.PreProcessImplement()
         self.words = self._get_words()
         self.word = ''
         self.sample = [i for i in range(len(self.words))]
@@ -133,9 +133,9 @@ class MainWdo(QMainWindow, mainwindow.Ui_MainWindow):
         if not self.words:
             logging.error('MainWdo - The set of words does not exist.')
             raise Exception('The set of words does not exist.')
-        index = random.sample(self.sample, 1)
-        self.sample.remove(index[0])
-        self.word = self.words[index[0]]
+        index = random.choice(self.sample)
+        self.sample.remove(index)
+        self.word = self.words[index]
         self.TBShow.clear()
         self.TBShow.setText("Please recite the meaning of the words according to the audio.")
         logging.info('MainWdo - The word \'{}\' has been selected.'.format(self.word))
@@ -211,7 +211,7 @@ def main():
 
 
 def download_all_words_audio():
-    ppi = preprocess.impl.PreProcessImplement()
+    ppi = dictionary.impl.PreProcessImplement()
     pron = pronounce.impl.GoogleImplement()
     words = ppi.run(DOCX_FILE, WRONG_FILE)
     for word in words:
