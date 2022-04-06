@@ -12,13 +12,18 @@ class DataBase(object):
     # initialize the object’s attributes
     def __init__(self):
         # public var
+        self.conn = None
         self.db = None
 
-    def database_create(self, database: str='../words.db'):
-        __conn = sqlite3.connect(database)
-        self.db = __conn.cursor()
+    def __del__(self):
+        self.conn.commit()
+        self.conn.close()
+
+    def database_connect(self, database: str='../words.db'):
+        self.conn = sqlite3.connect(database)
+        self.db = self.conn.cursor()
         logging.info('DataBase - _database_create - open database {}'.format(database))
-        return __conn.cursor()
+        return self.conn
 
     def database_create_table(self, table: str, **kwargs):
         attrs = ','.join([str(key)+' '+str(kwargs[key]) for key in kwargs])
@@ -37,10 +42,47 @@ class DataBase(object):
             attrs = ','.join([str(key)+' '+str(kwargs[key]) for key in kwargs])
             command = 'alter table {} add column {}'.format(table, attrs)
             self.db.execute(command)
+            logging.info('DataBase - database_add_column - Add column {} to table {}'.format(attrs, table))
+        else:
+            logging.error('DataBase - database_add_column - Table {} have following columns {}'.format(table, names))
+
+    def database_insert_row(self, table: str, record: tuple):
+        # command = "select name from sqlite_master where type='table'"
+        # exist_tables = list(*self.db.execute(command))
+        try:
+            command = 'insert into {} values {}'.format(table, record)
+            self.db.execute(command)
+            logging.info('DataBase - database_insert_row - Insert record {}'.format(record))
+        except:
+            logging.error('DataBase - database_insert_row - Can not insert record into table {}'.format(table))
+
+    def database_insert_records(self, table: str, records: list):
+        command = "select name from sqlite_master where type='table'"
+        exist_tables = list(*self.db.execute(command))
+        if table in exist_tables:
+            for record in records:
+                self.database_insert_row(table, record)
+            logging.info('DataBase - database_insert_records - Insert Records.')
+        else:
+            logging.error('DataBase - database_insert_records - Can not insert record into table {}'.format(table))
+
+    def database_find_records(self, table: str):
+        command = "select name from sqlite_master where type='table'"
+        exist_tables = list(*self.db.execute(command))
+        if table in exist_tables:
+            command = 'select * from {}'.format(table)
+            records = self.db.execute(command)
+            print(*records)
+
+    def database_update_values(self, values: tuple):
+        pass
+
+
 
 
 if __name__ == '__main__':
+    table = 'main'
+    word = ('abandon', 'give88', 0)
     words_db = DataBase()
-    words_db.database_create()
-    words_db.database_create_table('main', word='varchar(255) primary key', mean='text')
-    words_db.database_add_column('main', wrong='int')
+    words_db.database_connect()
+    words_db.database_find_records(table)
