@@ -31,7 +31,7 @@ class MainWdo(QMainWindow, mainwindow.Ui_MainWindow):
 
         self.pron = self._set_audio_source()
         self.tran = translate.impl.TranslateImplement()
-        self.ppi = dictionary.impl.PreProcessImplement()
+        self.ppi = dictionary.DictInterface.DictInterfaceImplement()
         self.words = self._get_words()
         self.word = ''
         self.sample = [i for i in range(len(self.words))]
@@ -210,8 +210,16 @@ def main():
     sys.exit(app.exec_())
 
 
+def init_database(name: str, table: str):
+    database = dictionary.DictDataBase.DataBaseImplement()
+    database.database_connect(name)
+    database.database_create_table(table, word='VARCHAR(255) PRIMARY KEY', level='VARCHAR(255)', index='VARCHAR(255)')
+    logging.info('init_database - Initialize a database.')
+    return database
+
+
 def download_all_words_audio():
-    ppi = dictionary.impl.PreProcessImplement()
+    ppi = dictionary.DictInterface.DictInterfaceImplement()
     pron = pronounce.impl.GoogleImplement()
     words = ppi.run(DOCX_FILE, WRONG_FILE)
     for word in words:
@@ -222,7 +230,6 @@ def download_all_words_audio():
 
 if __name__ == '__main__':
     logging.config.fileConfig('config/config.ini')
+    database = init_database('words.db', 'main')
     main()
     # download_all_words_audio()
-    # todo 删除词根
-    # todo 加入计时天数

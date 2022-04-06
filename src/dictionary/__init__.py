@@ -1,2 +1,2 @@
-from . import api
-from . import impl
+from . import DictInterface
+from . import DictDataBase

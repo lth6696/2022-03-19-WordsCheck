@@ -2,7 +2,7 @@ import logging
 import sqlite3
 
 
-class DataBase(object):
+class DataBaseImplement(object):
     # create the object
     def __new__(cls):
         # create a new object
@@ -19,7 +19,7 @@ class DataBase(object):
         self.conn.commit()
         self.conn.close()
 
-    def database_connect(self, database: str='../words.db'):
+    def database_connect(self, database: str):
         self.conn = sqlite3.connect(database)
         self.db = self.conn.cursor()
         logging.info('DataBase - _database_create - open database {}'.format(database))
@@ -28,6 +28,7 @@ class DataBase(object):
     def database_create_table(self, table: str, **kwargs):
         attrs = ','.join([str(key)+' '+str(kwargs[key]) for key in kwargs])
         command = 'create table if not exists {}({})'.format(table, attrs)
+        print(command)
         self.db.execute(command)
 
     def database_del_table(self, table: str):
@@ -45,6 +46,15 @@ class DataBase(object):
             logging.info('DataBase - database_add_column - Add column {} to table {}'.format(attrs, table))
         else:
             logging.error('DataBase - database_add_column - Table {} have following columns {}'.format(table, names))
+
+    def database_insert_primary_key(self, table: str, **kwargs):
+        try:
+            colums = ','.join(list(kwargs.keys()))
+            values = ','.join(['\''+str(kwargs[key])+'\'' for key in kwargs])
+            command = 'insert into {} ({}) values ({})'.format(table, colums, values)
+            self.db.execute(command)
+        except:
+            logging.error('DataBase - database_insert_primary_key - Can not insert key into table {}'.format(table))
 
     def database_insert_row(self, table: str, record: tuple):
         # command = "select name from sqlite_master where type='table'"
@@ -74,15 +84,20 @@ class DataBase(object):
             records = self.db.execute(command)
             print(*records)
 
-    def database_update_values(self, values: tuple):
-        pass
-
-
+    def database_update_values(self, table: str, word: str, **kwargs):
+        try:
+            attrs = ','.join([str(key)+'=\''+str(kwargs[key])+'\'' for key in kwargs])
+            command = "update {} set {} where word=\'{}\'".format(table,attrs, word)
+            self.db.execute(command)
+        except:
+            logging.error('DataBase - database_update_values - Failed to update values.')
 
 
 if __name__ == '__main__':
     table = 'main'
     word = ('abandon', 'give88', 0)
-    words_db = DataBase()
-    words_db.database_connect()
+    words_db = DataBaseImplement()
+    print(type(words_db))
+    words_db.database_connect('../words.db')
+    words_db.database_insert_primary_key(table, word='polish')
     words_db.database_find_records(table)
