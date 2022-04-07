@@ -4,7 +4,7 @@ import requests
 import bs4
 import logging
 
-from .api import Translate
+from src.translate.api import Translate
 
 
 class TranslateImplement(Translate):

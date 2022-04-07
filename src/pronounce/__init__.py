@@ -1,2 +1,2 @@
-from . import api
-from . import impl
+from src.pronounce import api
+from src.pronounce import impl

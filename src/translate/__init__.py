@@ -1,2 +1,2 @@
-from . import api
-from . import impl
+from src.translate import api
+from src.translate import impl

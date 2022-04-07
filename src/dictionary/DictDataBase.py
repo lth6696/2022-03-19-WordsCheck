@@ -27,8 +27,7 @@ class DataBaseImplement(object):
 
     def database_create_table(self, table: str, **kwargs):
         attrs = ','.join([str(key)+' '+str(kwargs[key]) for key in kwargs])
-        command = 'create table if not exists {}({})'.format(table, attrs)
-        print(command)
+        command = 'create table if not exists {} ({})'.format(table, attrs)
         self.db.execute(command)
 
     def database_del_table(self, table: str):

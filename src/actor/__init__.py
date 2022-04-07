@@ -1,1 +1,1 @@
-from . import ActorModel
+from src.actor import ActorModel

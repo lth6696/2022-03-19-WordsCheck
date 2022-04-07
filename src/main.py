@@ -1,4 +1,3 @@
-import os
 import sys
 import random
 import threading
@@ -8,20 +7,22 @@ import time
 import inspect
 import ctypes
 
+
 from PyQt5.QtWidgets import *
 
 import dictionary
 import pronounce
 import translate
+from src.message.MsgModel import Message
 from ui import mainwindow
 
 TEMP_FILE = './temp'
-DOCX_FILE = '../docx/58-62.csv'
+DOCX_FILE = '../docx/63-67.csv'
 WRONG_FILE = '../docx/wrong.csv'
 
 
 class MainWdo(QMainWindow, mainwindow.Ui_MainWindow):
-    def __init__(self):
+    def __init__(self, database_handler):
         super(MainWdo, self).__init__()
         self.setupUi(self)
         QApplication.setStyle(QStyleFactory.create('Fusion'))
@@ -38,6 +39,7 @@ class MainWdo(QMainWindow, mainwindow.Ui_MainWindow):
         self.wrong_answer = []
         self.correct_answer = -1
         self.threading = []
+        self.database_handler = database_handler
 
         self._set_sender()
 
@@ -69,6 +71,7 @@ class MainWdo(QMainWindow, mainwindow.Ui_MainWindow):
         self._cal_grade()
         self._kill_threads()
         self._next()
+        self.database_handler.send(Message('main', 'database', 'insert', 'row'))
 
     def _wrong(self):
         if self.word == '':
@@ -77,7 +80,7 @@ class MainWdo(QMainWindow, mainwindow.Ui_MainWindow):
         self.wrong_answer.append(self.word)
         logging.info('MainWdo - The number of wrong answer is {}.'.format(len(self.wrong_answer)))
         index = self.words.index(self.word)
-        self.sample.append(index)
+        # self.sample.append(index)
         self._cal_grade()
         self._kill_threads()
         self._next()
@@ -175,7 +178,7 @@ class MainWdo(QMainWindow, mainwindow.Ui_MainWindow):
         if not self.wrong_answer:
             logging.error('MainWdo - You answer is all correct.')
             return False
-        self.ppi.save(self.wrong_answer, WRONG_FILE)
+        self.ppi.words_to_csv(self.wrong_answer, WRONG_FILE)
 
     def _async_raise(self, tid, exctype):
         """Raises an exception in the threads with id tid"""
@@ -203,19 +206,11 @@ class MainWdo(QMainWindow, mainwindow.Ui_MainWindow):
         logging.info('MainWdo - All threads are deleted.')
 
 
-def main():
+def main(thread):
     app = QApplication(sys.argv)
-    wdo = MainWdo()
+    wdo = MainWdo(thread)
     wdo.show()
     sys.exit(app.exec_())
-
-
-def init_database(name: str, table: str):
-    database = dictionary.DictDataBase.DataBaseImplement()
-    database.database_connect(name)
-    database.database_create_table(table, word='VARCHAR(255) PRIMARY KEY', level='VARCHAR(255)', index='VARCHAR(255)')
-    logging.info('init_database - Initialize a database.')
-    return database
 
 
 def download_all_words_audio():
@@ -229,7 +224,11 @@ def download_all_words_audio():
 
 
 if __name__ == '__main__':
+    threads = {}
     logging.config.fileConfig('config/config.ini')
-    database = init_database('words.db', 'main')
-    main()
+    threads['database'] = dictionary.DictActorModel.DictActorImplement(name='words.db', table='main')
+    # threads['main'] =
+    for key in threads:
+        threads[key].start()
+    main(threads['database'])
     # download_all_words_audio()

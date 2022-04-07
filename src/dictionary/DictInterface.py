@@ -6,7 +6,7 @@ import logging
 import docx2txt
 import enchant
 
-from .DictDataBase import DataBaseImplement
+from src.dictionary.DictDataBase import DataBaseImplement
 
 
 class DictInterfaceImplement(object):

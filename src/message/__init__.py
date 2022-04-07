@@ -1,0 +1,1 @@
+from src.message import MsgModel

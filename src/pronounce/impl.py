@@ -4,7 +4,7 @@ import urllib.request
 from playsound import playsound
 from gtts import gTTS
 
-from .api import Pronounce
+from src.pronounce.api import Pronounce
 
 
 class YouDaoImplement(Pronounce):
