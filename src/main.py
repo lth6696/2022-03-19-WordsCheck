@@ -17,7 +17,7 @@ from src.message.MsgModel import Message
 from ui import mainwindow
 
 TEMP_FILE = './temp'
-DOCX_FILE = '../docx/63-67.csv'
+DOCX_FILE = '../docx/68-70.csv'
 WRONG_FILE = '../docx/wrong.csv'
 
 
