@@ -18,19 +18,39 @@ class DictActorImplement(Actor):
             msg = self.recv()
             if not isinstance(msg, Message):
                 continue
+            logging.info('DictActorImplement - run - Message info {}'.format(msg.__dict__))
             if msg.recv != 'database':
                 continue
-            getattr(self, msg.func)(msg.args)
+            try:
+                getattr(self, msg.func)(**msg.args)
+            except:
+                logging.error('DictActorImplement - run - Request method {} not exist or arguments {} wrong.'
+                              .format(msg.func, msg.args))
 
-    def insert(self, row):
-        print(row)
+    def update(self, word: str, **kwargs):
+        try:
+            self.database.database_connect(self.name)
+            self.database.database_update_values(self.table, word, **kwargs)
+            self.database.conn.commit()
+            self.database.conn.close()
+            logging.info('DictActorImplement - update - Word \'{}\' is update {}.'.format(word, kwargs))
+        except:
+            logging.error('DictActorImplement - update - Word \'{}\' do not update successfully.'.format(word))
+
+    def insert(self, words: list, range: str):
+        self.database.database_connect(self.name)
+        for word in words:
+            self.database.database_insert_row(self.table, (word, '', range))
+        self.database.conn.commit()
+        self.database.conn.close()
+        logging.info('DictActorImplement - insert - Insert all of words.')
 
     def __init_database(self):
         database = DataBaseImplement()
         database.database_connect(self.name)
         database.database_create_table(self.table,
-                                       word='VARCHAR(255) PRIMARY KEY',
-                                       level='VARCHAR(255)',
-                                       range='VARCHAR(255)')
+                                       word='TEXT PRIMARY KEY',
+                                       level='TEXT',
+                                       range='TEXT')
         logging.info('DictActorImplement - __init_database - Initialize a database.')
         return database

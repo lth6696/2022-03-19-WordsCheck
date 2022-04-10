@@ -1,2 +1,2 @@
-from src.pronounce import api
-from src.pronounce import impl
+from src.pronounce import PronInterface
+from src.pronounce import PronActorModel

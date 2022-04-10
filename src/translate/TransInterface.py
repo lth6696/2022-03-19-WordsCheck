@@ -1,15 +1,10 @@
-import logging
-
 import requests
 import bs4
 import logging
 
-from src.translate.api import Translate
 
-
-class TranslateImplement(Translate):
+class TranslateImplement(object):
     def __init__(self):
-        Translate.__init__(self)
         logging.info('TranslateImplement - Initialize the module of TranslateImplement.')
         self.word = self.set_word()
 

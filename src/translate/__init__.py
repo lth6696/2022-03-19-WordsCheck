@@ -1,2 +1,2 @@
-from src.translate import api
-from src.translate import impl
+from src.translate import TransInterface
+from src.translate import TransActorModel

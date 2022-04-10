@@ -22,13 +22,14 @@ class DataBaseImplement(object):
     def database_connect(self, database: str):
         self.conn = sqlite3.connect(database)
         self.db = self.conn.cursor()
-        logging.info('DataBase - _database_create - open database {}'.format(database))
+        logging.info('DataBaseImplement - database_connect - open database {}'.format(database))
         return self.conn
 
     def database_create_table(self, table: str, **kwargs):
         attrs = ','.join([str(key)+' '+str(kwargs[key]) for key in kwargs])
-        command = 'create table if not exists {} ({})'.format(table, attrs)
+        command = 'create table if not exists {} ({});'.format(table, attrs)
         self.db.execute(command)
+        logging.info('DataBaseImplement - database_create_table - created or connected to table {}'.format(table))
 
     def database_del_table(self, table: str):
         command = 'drop table {}'.format(table)
@@ -50,7 +51,7 @@ class DataBaseImplement(object):
         try:
             colums = ','.join(list(kwargs.keys()))
             values = ','.join(['\''+str(kwargs[key])+'\'' for key in kwargs])
-            command = 'insert into {} ({}) values ({})'.format(table, colums, values)
+            command = 'insert or ignore into {} ({}) values ({});'.format(table, colums, values)
             self.db.execute(command)
         except:
             logging.error('DataBase - database_insert_primary_key - Can not insert key into table {}'.format(table))
@@ -59,6 +60,7 @@ class DataBaseImplement(object):
         # command = "select name from sqlite_master where type='table'"
         # exist_tables = list(*self.db.execute(command))
         try:
+            # INSERT INTO TABLE_NAME VALUES (value1,value2,value3,...valueN);
             command = 'insert into {} values {}'.format(table, record)
             self.db.execute(command)
             logging.info('DataBase - database_insert_row - Insert record {}'.format(record))
@@ -90,13 +92,20 @@ class DataBaseImplement(object):
             self.db.execute(command)
         except:
             logging.error('DataBase - database_update_values - Failed to update values.')
+            raise Exception()
 
 
 if __name__ == '__main__':
-    table = 'main'
+    table = 'test'
     word = ('abandon', 'give88', 0)
     words_db = DataBaseImplement()
     print(type(words_db))
     words_db.database_connect('../words.db')
+    # words_db.database_del_table(table)
+    # words_db.database_create_table(table,
+    #                                word='TEXT PRIMARY KEY',
+    #                                level='TEXT',
+    #                                range='TEXT')
     words_db.database_insert_primary_key(table, word='polish')
     words_db.database_find_records(table)
+    words_db.conn.commit()
