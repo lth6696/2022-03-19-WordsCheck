@@ -1,4 +1,5 @@
 import logging.config
+import os
 import sys
 
 from PyQt5.QtWidgets import *
@@ -12,9 +13,11 @@ from src.message.MsgModel import Message
 from ui.UIFunction import UIFunctionImplement
 
 TEMP_FILE = './temp'
-DOCX_FILE = '../docx/68-70.csv'
+DOCX_FILE = '../docx/76-80.csv'
 WRONG_FILE = '../docx/wrong.csv'
-RANGE = '068070'
+RANGE = '076080'
+
+# os.environ['http'] = 'http://127.0.0.1:1089'
 
 
 def download_all_words_audio(audio=True):
