@@ -87,7 +87,7 @@ class GoogleImplement(object):
         if not os.path.exists(path):
             logging.info('GoogleImplement - Create a new directory in path {}.'.format(path))
             os.mkdir(path)
-        temp = path + '/' + str(self.word) + '_goo' '_{}.mp3'.format(self.accent)
+        temp = path + '/' + str(self.word) + '_goo' '_{}.mp3'.format(self.accent['lang'])
         if not os.path.exists(temp):
             tts = gTTS(text=self.word, **self.accent)
             tts.save(temp)

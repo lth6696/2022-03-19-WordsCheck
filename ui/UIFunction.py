@@ -132,7 +132,9 @@ class UIFunctionImplement(QMainWindow, Ui_MainWindow):
         else:
             grade = self.grade['right'] / checked_words * 100
             self.TBGrade.clear()
-            self.TBGrade.append('Your score is {:.2f} in {} words.'.format(grade, checked_words))
+            self.TBGrade.append('Your score is {:.2f} within {} words and {} remaining.'.format(grade,
+                                                                                                checked_words,
+                                                                                                len(self.words)))
             logging.info('UIFunctionImplement - _cal_grade - Score updated to {:2f}.'.format(grade))
 
     # def _async_raise(self, tid, exctype):

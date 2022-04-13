@@ -9,7 +9,7 @@ class TransActorImplement(Actor):
     def __init__(self):
         super(TransActorImplement, self).__init__()
 
-        self.trans = OxfordTranslateImplement()
+        self.trans = YouDaoTranslateImplement()
 
     def run(self):
         while True:
