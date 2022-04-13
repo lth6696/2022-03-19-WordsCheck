@@ -2,7 +2,7 @@ import logging
 
 from src.actor.ActorModel import Actor
 from src.message.MsgModel import Message
-from src.pronounce.PronInterface import YouDaoImplement, GoogleImplement
+from src.pronounce.PronInterface import YouDaoImplement, GoogleImplement, OxfordImplement
 
 
 class PronActorImplement(Actor):
@@ -31,6 +31,9 @@ class PronActorImplement(Actor):
         elif name == 'YouDao':
             self.pron = YouDaoImplement()
             logging.info('PronActorImplement - set_source - Switch to source \'YouDao\'.')
+        elif name == 'Oxford':
+            self.pron = OxfordImplement()
+            logging.info('PronActorImplement - set_source - Switch to source \'Oxford\'.')
         else:
             logging.error('PronActorImplement - set_source - Source no found \'{}\'.'.format(name))
 

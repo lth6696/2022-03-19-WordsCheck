@@ -13,17 +13,15 @@ from src.message.MsgModel import Message
 from ui.UIFunction import UIFunctionImplement
 
 TEMP_FILE = './temp'
-DOCX_FILE = '../docx/76-80.csv'
+DOCX_FILE = '../docx/71-75.csv'
 WRONG_FILE = '../docx/wrong.csv'
-RANGE = '076080'
-
-# os.environ['http'] = 'http://127.0.0.1:1089'
+RANGE = '071075'
 
 
 def download_all_words_audio(audio=True):
     dict_iface = DictInterfaceImplement()
     pron = GoogleImplement()
-    words = dict_iface.run(DOCX_FILE, WRONG_FILE)
+    words = dict_iface.run(DOCX_FILE)
     if audio:
         for word in words:
             pron.set_word(word)

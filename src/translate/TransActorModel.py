@@ -2,14 +2,14 @@ import logging
 
 from src.message.MsgModel import Message
 from src.actor.ActorModel import Actor
-from src.translate.TransInterface import TranslateImplement
+from src.translate.TransInterface import YouDaoTranslateImplement, OxfordTranslateImplement
 
 
 class TransActorImplement(Actor):
     def __init__(self):
         super(TransActorImplement, self).__init__()
 
-        self.trans = TranslateImplement()
+        self.trans = OxfordTranslateImplement()
 
     def run(self):
         while True:

@@ -39,12 +39,12 @@
      </widget>
     </item>
     <item row="2" column="1">
-     <widget class="QRadioButton" name="RBBaidu">
+     <widget class="QRadioButton" name="RBOxford">
       <property name="styleSheet">
        <string notr="true">font: 87 10pt &quot;Arial Black&quot;;</string>
       </property>
       <property name="text">
-       <string>Baidu</string>
+       <string>Oxford</string>
       </property>
      </widget>
     </item>

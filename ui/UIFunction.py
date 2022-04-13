@@ -37,7 +37,7 @@ class UIFunctionImplement(QMainWindow, Ui_MainWindow):
         self.PBExit.clicked.connect(self._exit)
 
         self.RBGoogle.toggled.connect(self._set_audio_source)
-        self.RBBaidu.toggled.connect(self._set_audio_source)
+        self.RBOxford.toggled.connect(self._set_audio_source)
         self.RBDeepL.toggled.connect(self._set_audio_source)
         self.RBYouDao.toggled.connect(self._set_audio_source)
         logging.info('UIFunctionImplement - Initialise the connection.')
@@ -103,8 +103,8 @@ class UIFunctionImplement(QMainWindow, Ui_MainWindow):
     def _set_audio_source(self):
         if self.RBGoogle.isChecked():
             self.pronouncer.send(Message('ui', 'pronounce', 'set_source', {'name': 'Google'}))
-        elif self.RBBaidu.isChecked():
-            self.pronouncer.send(Message('ui', 'pronounce', 'set_source', {'name': 'Baidu'}))
+        elif self.RBOxford.isChecked():
+            self.pronouncer.send(Message('ui', 'pronounce', 'set_source', {'name': 'Oxford'}))
         elif self.RBDeepL.isChecked():
             self.pronouncer.send(Message('ui', 'pronounce', 'set_source', {'name': 'DeepL'}))
         elif self.RBYouDao.isChecked():
