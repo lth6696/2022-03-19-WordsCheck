@@ -1,5 +1,6 @@
 import logging
 import random
+import pdb
 
 from PyQt5.QtWidgets import *
 
@@ -27,6 +28,8 @@ class UIFunctionImplement(QMainWindow, Ui_MainWindow):
         self.is_first_boot = True
 
         self._set_sender()
+        self._set_audio_source()
+        self._get_wrong_words()
 
     def _set_sender(self):
         self.PBCorrect.clicked.connect(self._correct)
@@ -92,13 +95,16 @@ class UIFunctionImplement(QMainWindow, Ui_MainWindow):
             logging.info('UIFunctionImplement - _show_spell_only - '
                          'The spell of \'{}\' has been showed in the QTextBrowser'.format(self.word))
 
-    def _translate(self):
+    def _translate(self, meanings: list = None):
         if not self.word:
             logging.error('UIFunctionImplement - _translate - A word must be set.')
+        elif meanings:
+            for text in meanings:
+                self.TBShow.append(text)
         else:
             self.TBShow.clear()
             self.TBShow.append(self.word)
-            self.translator.send(Message('ui', 'translate', 'translate', {'word': self.word, 'handler': self.TBShow}))
+            self.translator.send(Message('ui', 'translate', 'translate', {'word': self.word}))
 
     def _set_audio_source(self):
         if self.RBGoogle.isChecked():
@@ -137,27 +143,5 @@ class UIFunctionImplement(QMainWindow, Ui_MainWindow):
                                                                                                 len(self.words)))
             logging.info('UIFunctionImplement - _cal_grade - Score updated to {:2f}.'.format(grade))
 
-    # def _async_raise(self, tid, exctype):
-    #     """Raises an exception in the threads with id tid"""
-    #     if not inspect.isclass(exctype):
-    #         logging.error('MainWdo - Only types can be raised (not instances)')
-    #         # raise TypeError("Only types can be raised (not instances)")
-    #     res = ctypes.pythonapi.PyThreadState_SetAsyncExc(ctypes.c_long(tid), ctypes.py_object(exctype))
-    #     if res == 0:
-    #         logging.error('MainWdo - Invalid thread id.')
-    #         # raise ValueError("invalid thread id")
-    #     elif res != 1:
-    #         # """if it returns a number greater than one, you're in trouble,
-    #         # and you should call it again with exc=NULL to revert the effect"""
-    #         ctypes.pythonapi.PyThreadState_SetAsyncExc(tid, None)
-    #         logging.error('MainWdo - PyThreadState_SetAsyncExc failed.')
-    #         # raise SystemError("PyThreadState_SetAsyncExc failed")
-    #
-    # def _stop_thread(self, thread):
-    #     self._async_raise(thread.ident, SystemExit)
-    #
-    # def _kill_threads(self):
-    #     for t in self.threading:
-    #         self._stop_thread(t)
-    #     self.threading = []
-    #     logging.info('MainWdo - All threads are deleted.')
+    def _get_wrong_words(self):
+        self.databaser.send(Message('ui', 'database', 'find_wrong_words', {}))

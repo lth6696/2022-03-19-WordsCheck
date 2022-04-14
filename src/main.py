@@ -1,5 +1,4 @@
 import logging.config
-import os
 import sys
 
 from PyQt5.QtWidgets import *
@@ -11,6 +10,7 @@ from src.pronounce.PronActorModel import PronActorImplement
 from src.translate.TransActorModel import TransActorImplement
 from src.message.MsgModel import Message
 from ui.UIFunction import UIFunctionImplement
+from ui.UIActorModel import UIActorImplement
 
 TEMP_FILE = './temp'
 DOCX_FILE = '../docx/71-75.csv'
@@ -35,15 +35,12 @@ if __name__ == '__main__':
     words = download_all_words_audio(False)
 
     threads = {}
-    threads['database'] = DictActorImplement(name='words.db', table='checkwords')
+    threads['ui'] = UIActorImplement()
+    threads['database'] = DictActorImplement(name='words.db', table='checkwords', ui_handler=threads['ui'])
     threads['pronounce'] = PronActorImplement()
-    threads['translate'] = TransActorImplement()
+    threads['translate'] = TransActorImplement(ui_handler=threads['ui'])
     for key in threads:
         threads[key].start()
 
-    threads['database'].send(Message('ui', 'database', 'insert', {'words': words, 'range': RANGE}))
-
-    app = QApplication(sys.argv)
-    windo = UIFunctionImplement(words, threads['database'], threads['translate'], threads['pronounce'])
-    windo.show()
-    sys.exit(app.exec_())
+    # threads['database'].send(Message('main', 'database', 'insert', {'words': words, 'range': RANGE}))
+    threads['ui'].execute_ui(words, threads['database'], threads['translate'], threads['pronounce'])

@@ -6,10 +6,11 @@ from src.translate.TransInterface import YouDaoTranslateImplement, OxfordTransla
 
 
 class TransActorImplement(Actor):
-    def __init__(self):
+    def __init__(self, ui_handler):
         super(TransActorImplement, self).__init__()
 
-        self.trans = YouDaoTranslateImplement()
+        self.trans = OxfordTranslateImplement()
+        self.userinterfacer = ui_handler
 
     def run(self):
         while True:
@@ -25,10 +26,8 @@ class TransActorImplement(Actor):
                 logging.error('TransActorImplement - run - Request method {} not exist or arguments {} wrong.'
                               .format(msg.func, msg.args))
 
-    def translate(self, word, handler):
+    def translate(self, word):
         self.trans.set_word(word)
         meanings = self.trans.paraphrase()
-        for m in meanings:
-            handler.append(m)
-        logging.info('TransActorImplement - translate - The translation of \'{}\' has been showed in the QTextBrowser'.
-                     format(word))
+        self.userinterfacer.send(Message('translate', 'ui', '_show_text', {'text': meanings}))
+        logging.info('TransActorImplement - translate - The translation of \'{}\' has been send to UI'.format(word))

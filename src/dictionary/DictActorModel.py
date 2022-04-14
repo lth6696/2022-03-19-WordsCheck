@@ -6,12 +6,13 @@ from src.dictionary.DictDataBase import DataBaseImplement
 
 
 class DictActorImplement(Actor):
-    def __init__(self, name: str, table: str):
+    def __init__(self, name: str, table: str, ui_handler):
         super(DictActorImplement, self).__init__()
 
         self.name = name
         self.table = table
         self.database = self.__init_database()
+        self.userinterfacer = ui_handler
 
     def run(self):
         while True:
@@ -44,6 +45,14 @@ class DictActorImplement(Actor):
         self.database.conn.commit()
         self.database.conn.close()
         logging.info('DictActorImplement - insert - Insert all of words.')
+
+    def find_wrong_words(self):
+        self.database.database_connect(self.name)
+        records = self.database.database_find_records(self.table,
+                                                      columns=['word'],
+                                                      const={'level': 'wrong', 'range': '071075'})
+        wrong_words = [word[0] for word in records]
+        self.userinterfacer.send(Message('database', 'ui', '_add_wrong_words', {'words': wrong_words}))
 
     def __init_database(self):
         database = DataBaseImplement()
