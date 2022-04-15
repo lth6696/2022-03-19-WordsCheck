@@ -50,7 +50,7 @@ class DictActorImplement(Actor):
         self.database.database_connect(self.name)
         records = self.database.database_find_records(self.table,
                                                       columns=['word'],
-                                                      const={'level': 'wrong', 'range': '071075'})
+                                                      const={'level': 'wrong'})
         wrong_words = [word[0] for word in records]
         self.userinterfacer.send(Message('database', 'ui', '_add_wrong_words', {'words': wrong_words}))
 

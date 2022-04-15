@@ -6,9 +6,10 @@ from src.pronounce.PronInterface import YouDaoImplement, GoogleImplement, Oxford
 
 
 class PronActorImplement(Actor):
-    def __init__(self):
+    def __init__(self, proxies: dict = None):
         super(PronActorImplement, self).__init__()
         self.pron = YouDaoImplement()
+        self.proxies = proxies
 
     def run(self):
         while True:
@@ -32,7 +33,7 @@ class PronActorImplement(Actor):
             self.pron = YouDaoImplement()
             logging.info('PronActorImplement - set_source - Switch to source \'YouDao\'.')
         elif name == 'Oxford':
-            self.pron = OxfordImplement()
+            self.pron = OxfordImplement(proxies=self.proxies)
             logging.info('PronActorImplement - set_source - Switch to source \'Oxford\'.')
         else:
             logging.error('PronActorImplement - set_source - Source no found \'{}\'.'.format(name))

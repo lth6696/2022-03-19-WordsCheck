@@ -28,7 +28,7 @@ class UIFunctionImplement(QMainWindow, Ui_MainWindow):
         self.is_first_boot = True
 
         self._set_sender()
-        self._set_audio_source()
+        self._set_source()
         self._get_wrong_words()
 
     def _set_sender(self):
@@ -39,10 +39,10 @@ class UIFunctionImplement(QMainWindow, Ui_MainWindow):
         self.PBTranslate.clicked.connect(self._translate)
         self.PBExit.clicked.connect(self._exit)
 
-        self.RBGoogle.toggled.connect(self._set_audio_source)
-        self.RBOxford.toggled.connect(self._set_audio_source)
-        self.RBDeepL.toggled.connect(self._set_audio_source)
-        self.RBYouDao.toggled.connect(self._set_audio_source)
+        self.RBGoogle.toggled.connect(self._set_source)
+        self.RBOxford.toggled.connect(self._set_source)
+        self.RBDeepL.toggled.connect(self._set_source)
+        self.RBYouDao.toggled.connect(self._set_source)
         logging.info('UIFunctionImplement - Initialise the connection.')
 
     def _correct(self):
@@ -106,15 +106,19 @@ class UIFunctionImplement(QMainWindow, Ui_MainWindow):
             self.TBShow.append(self.word)
             self.translator.send(Message('ui', 'translate', 'translate', {'word': self.word}))
 
-    def _set_audio_source(self):
+    def _set_source(self):
         if self.RBGoogle.isChecked():
             self.pronouncer.send(Message('ui', 'pronounce', 'set_source', {'name': 'Google'}))
+            self.translator.send(Message('ui', 'translate', 'set_source', {'name': 'Google'}))
         elif self.RBOxford.isChecked():
             self.pronouncer.send(Message('ui', 'pronounce', 'set_source', {'name': 'Oxford'}))
+            self.translator.send(Message('ui', 'translate', 'set_source', {'name': 'Oxford'}))
         elif self.RBDeepL.isChecked():
             self.pronouncer.send(Message('ui', 'pronounce', 'set_source', {'name': 'DeepL'}))
+            self.translator.send(Message('ui', 'translate', 'set_source', {'name': 'DeepL'}))
         elif self.RBYouDao.isChecked():
             self.pronouncer.send(Message('ui', 'pronounce', 'set_source', {'name': 'YouDao'}))
+            self.translator.send(Message('ui', 'translate', 'set_source', {'name': 'YouDao'}))
         else:
             logging.error('UIFunctionImplement - _set_audio_source - No QRadioButton is checked.')
 

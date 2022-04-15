@@ -7,9 +7,10 @@ import enchant
 
 
 class TranslateImplement(object):
-    def __init__(self):
+    def __init__(self, proxies: dict = None):
         self.word = ''
         self.enchant = enchant.Dict("en_US")
+        self.proxies = proxies
 
     def set_word(self, word: str):
         if self._is_word(word):
@@ -29,8 +30,8 @@ class TranslateImplement(object):
 
 
 class YouDaoTranslateImplement(TranslateImplement):
-    def __init__(self):
-        super().__init__()
+    def __init__(self, proxies: dict = None):
+        super(YouDaoTranslateImplement, self).__init__(proxies)
         logging.info('YouDaoTranslateImplement - Initialize the module of YouDaoTranslateImplement.')
 
     def _get_url(self):
@@ -45,7 +46,7 @@ class YouDaoTranslateImplement(TranslateImplement):
         headers = {
             'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv: 34.0 Gecko/20100101 Firefox/34.0'
         }
-        response = requests.get(url, headers)
+        response = requests.get(url, headers, proxies=self.proxies)
         soup = bs4.BeautifulSoup(response.content, "html.parser")
         logging.info('YouDaoTranslateImplement - The url has been parsed as Beautiful Soup.')
         return soup
@@ -64,8 +65,8 @@ class YouDaoTranslateImplement(TranslateImplement):
 
 
 class OxfordTranslateImplement(TranslateImplement):
-    def __init__(self):
-        super().__init__()
+    def __init__(self, proxies: dict = None):
+        super(OxfordTranslateImplement, self).__init__(proxies)
         logging.info('OxfordTranslateImplement - Initialize the module of OxfordTranslateImplement.')
 
         # The following attributions need to apply to the oxford official website.
@@ -80,7 +81,7 @@ class OxfordTranslateImplement(TranslateImplement):
             'app_key': self.app_key
         }
         url = self._get_url()
-        response = requests.get(url, headers=headers, timeout=1000)
+        response = requests.get(url, headers=headers, timeout=1000, proxies=self.proxies)
         # 使用json()方法，将response对象，转为列表/字典
         content = response.json()
         """
@@ -141,9 +142,3 @@ class OxfordTranslateImplement(TranslateImplement):
         else:
             pass
         return type_
-
-
-if __name__ == '__main__':
-    tran = OxfordTranslateImplement()
-    tran.set_word('letter')
-    tran.paraphrase()
