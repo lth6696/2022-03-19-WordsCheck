@@ -11,9 +11,9 @@ from src.message.MsgModel import Message
 from ui.UIActorModel import UIActorImplement
 
 TEMP_FILE = './temp'
-DOCX_FILE = '../docx/90-94.csv'
+DOCX_FILE = '../docx/95-99.csv'
 WRONG_FILE = '../docx/wrong.csv'
-RANGE = '090'
+RANGE = '095'
 PROXY = {'https': 'http://127.0.0.1:8889'}
 # PROXY = None
 
