@@ -11,11 +11,11 @@ from src.message.MsgModel import Message
 from ui.UIActorModel import UIActorImplement
 
 TEMP_FILE = './temp'
-DOCX_FILE = '../docx/111-115.csv'
+DOCX_FILE = '../docx/137-141.csv'
 WRONG_FILE = '../docx/wrong.csv'
-RANGE = '111'
-PROXY = {'https': 'http://127.0.0.1:8889'}
-# PROXY = None
+RANGE = '137'
+# PROXY = {'https': 'http://127.0.0.1:8889'}
+PROXY = None
 
 
 def download_all_words_audio(audio=True):
